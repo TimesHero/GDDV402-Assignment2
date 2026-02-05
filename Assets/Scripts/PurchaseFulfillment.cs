@@ -1,12 +1,21 @@
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
+using TMPro;
+using System.Collections;
 
 public class PurchaseFulfillment : MonoBehaviour
 {
-    public int availableGems = 0;
-    private const string GEMS_5 = "Buy5Jems";
-    private const string GEMS_10 = "Buy10Jems";
+    [SerializeField] private CurrencyManager currencyManager;
+    [SerializeField] private GameObject hideSinglePurchaseButton;
+    public int availableRupees = 0;
+    private const string RUPEE_1 = "Buy1Rupee";
+    private const string RUPEE_10 = "Buy10Rupees";
+    private const string WALLET_UPGRADE = "UpgradeWallet";
+
+    [SerializeField] private TextMeshProUGUI statusText;
+    [SerializeField] private float statusDuration =2f;
+    private Coroutine clearStatusCoroutine;
 
     public void OnConfirmedOrder(ConfirmedOrder confirmedOrder)
     {
@@ -16,11 +25,21 @@ public class PurchaseFulfillment : MonoBehaviour
         {
             switch(info.productId)
             {
-                case GEMS_5:
-                    GrantGems(5);
+                case RUPEE_1:
+                    Debug.Log($"You've added 1 Rupee to your Wallet!");
+                    currencyManager.AddCurrency(1);
+                    ShowStatus("Purchase Successful!");
                     break;
-                case GEMS_10:
-                    GrantGems(10);
+                case RUPEE_10:
+                    Debug.Log($"You've added 10 Rupees to your Wallet!");
+                    currencyManager.AddCurrency(10);
+                    ShowStatus("Purchase Successful!");
+                    break;
+                case WALLET_UPGRADE:
+                    Debug.Log("You've upgraded your wallet! You can now hold more Rupees!");
+                    currencyManager.UpgradeWallet();
+                    hideSinglePurchaseButton.SetActive(false);
+                    ShowStatus("Purchase Successful!");
                     break;
             }
         }
@@ -38,11 +57,35 @@ public class PurchaseFulfillment : MonoBehaviour
 
         Debug.Log($"Failed to purchase the following items:{items}");
         Debug.Log($"Reason: '{failedOrder.FailureReason}', Details: '{failedOrder.Details}'");
+        ShowStatus("Purchase Failed! Please Try Again Later!");
     }
 
-    private void GrantGems(int gemAmount)
+    private void GrantRupee(int rupeeAmount)
     {
-        availableGems += gemAmount;
-        Debug.Log($"You Purchased {gemAmount} gems!");
+        availableRupees += rupeeAmount;
+        Debug.Log($"You Purchased {rupeeAmount} Rupee(s)!");
+    }
+
+    private void ShowStatus(string message)
+    {
+        if (statusText == null)
+        return;
+
+        statusText.text = message;
+
+        if(clearStatusCoroutine != null)
+        StopCoroutine(clearStatusCoroutine);
+
+        clearStatusCoroutine = StartCoroutine(ClearStatusAfterDelay());
+    }
+
+    private IEnumerator ClearStatusAfterDelay()
+    {
+        yield return new WaitForSeconds(statusDuration);
+
+        if (statusText != null)
+        statusText.text = string.Empty;
+
+        clearStatusCoroutine = null;
     }
 }
