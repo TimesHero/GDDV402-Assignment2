@@ -3,11 +3,16 @@ using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PurchaseFulfillment : MonoBehaviour
 {
+    [SerializeField] private SaveManager saveManager;
     [SerializeField] private CurrencyManager currencyManager;
-    [SerializeField] private GameObject hideSinglePurchaseButton;
+    [SerializeField] private GameObject walletUpgradeButton;
+    [SerializeField] private HorizontalLayoutGroup buttonLayoutGroup;
+
+
     public int availableRupees = 0;
     private const string RUPEE_1 = "Buy1Rupee";
     private const string RUPEE_10 = "Buy10Rupees";
@@ -29,17 +34,20 @@ public class PurchaseFulfillment : MonoBehaviour
                     Debug.Log($"You've added 1 Rupee to your Wallet!");
                     currencyManager.AddCurrency(1);
                     ShowStatus("Purchase Successful!");
+                    saveManager.Save();
                     break;
                 case RUPEE_10:
                     Debug.Log($"You've added 10 Rupees to your Wallet!");
                     currencyManager.AddCurrency(10);
                     ShowStatus("Purchase Successful!");
+                    saveManager.Save();
                     break;
                 case WALLET_UPGRADE:
                     Debug.Log("You've upgraded your wallet! You can now hold more Rupees!");
                     currencyManager.UpgradeWallet();
-                    hideSinglePurchaseButton.SetActive(false);
                     ShowStatus("Purchase Successful!");
+                    saveManager.Save();
+                    RemoveWalletUpgradeButton();
                     break;
             }
         }
@@ -88,4 +96,18 @@ public class PurchaseFulfillment : MonoBehaviour
 
         clearStatusCoroutine = null;
     }
+
+    private void RemoveWalletUpgradeButton()
+    {
+        if (walletUpgradeButton != null)
+        {
+            Destroy(walletUpgradeButton);
+        }
+
+        if (buttonLayoutGroup != null)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(buttonLayoutGroup.GetComponent<RectTransform>());
+        }
+    }
+
 }

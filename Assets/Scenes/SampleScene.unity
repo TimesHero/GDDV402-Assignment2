@@ -250,8 +250,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e93faa4abb8a0ecca89916ef9e3b668b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PurchaseFulfillment
+  saveManager: {fileID: 1853909733}
   currencyManager: {fileID: 584541453}
-  hideSinglePurchaseButton: {fileID: 1471752148}
+  walletUpgradeButton: {fileID: 1471752148}
+  buttonLayoutGroup: {fileID: 1596492535}
   availableRupees: 0
   statusText: {fileID: 676831040}
   statusDuration: 2
