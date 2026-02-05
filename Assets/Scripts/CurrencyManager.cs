@@ -22,5 +22,6 @@ public class CurrencyManager : MonoBehaviour
     {
         walletUpgraded = true;
         walletCapacity = upgradedWalletCapacity;
+        maxWalletCapacity = upgradedWalletCapacity;
     }
 }
