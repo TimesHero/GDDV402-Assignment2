@@ -4,6 +4,7 @@ using System.IO;
 public class SaveManager : MonoBehaviour
 {
     [SerializeField] CurrencyManager currencyManager;
+    [SerializeField] PurchaseFulfillment purchaseFulfillment;
 
     private string saveFileName = "RupeeSave.json";
     private string SavePath => Path.Combine(Application.persistentDataPath, saveFileName);

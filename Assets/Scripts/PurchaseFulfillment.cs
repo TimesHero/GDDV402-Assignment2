@@ -7,17 +7,22 @@ using UnityEngine.UI;
 
 public class PurchaseFulfillment : MonoBehaviour
 {
+    [Header("General References")]
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private CurrencyManager currencyManager;
     [SerializeField] private GameObject walletUpgradeButton;
-    [SerializeField] private HorizontalLayoutGroup buttonLayoutGroup;
+    [Header("Audio References")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] public AudioClip thankYou;
+    [SerializeField] public AudioClip rupeeSound;
+    [SerializeField] public AudioClip upgradeSound;
 
 
     public int availableRupees = 0;
     private const string RUPEE_1 = "Buy1Rupee";
     private const string RUPEE_10 = "Buy10Rupees";
     private const string WALLET_UPGRADE = "UpgradeWallet";
-
+    [Header("On Screen Text")]
     [SerializeField] private TextMeshProUGUI statusText;
     [SerializeField] private float statusDuration =2f;
     private Coroutine clearStatusCoroutine;
@@ -33,12 +38,26 @@ public class PurchaseFulfillment : MonoBehaviour
                 case RUPEE_1:
                     Debug.Log($"You've added 1 Rupee to your Wallet!");
                     currencyManager.AddCurrency(1);
+                    
+                    //Audio things
+                    if (sfxSource != null && thankYou != null)
+                        sfxSource.PlayOneShot(thankYou, 1f);
+                    if (sfxSource != null && rupeeSound != null)
+                        StartCoroutine(PlaySoundWithDelay(rupeeSound, 1, 1f));
+
                     ShowStatus("Purchase Successful!");
                     saveManager.Save();
                     break;
                 case RUPEE_10:
                     Debug.Log($"You've added 10 Rupees to your Wallet!");
                     currencyManager.AddCurrency(10);
+
+                    //Audio things
+                    if (sfxSource != null && thankYou != null)
+                        sfxSource.PlayOneShot(thankYou, 1f);
+                    if (sfxSource != null && rupeeSound != null)
+                        StartCoroutine(PlaySoundWithDelay(rupeeSound, 10, 0.1f));
+
                     ShowStatus("Purchase Successful!");
                     saveManager.Save();
                     break;
@@ -97,17 +116,25 @@ public class PurchaseFulfillment : MonoBehaviour
         clearStatusCoroutine = null;
     }
 
+
     private void RemoveWalletUpgradeButton()
     {
         if (walletUpgradeButton != null)
         {
-            Destroy(walletUpgradeButton);
-        }
-
-        if (buttonLayoutGroup != null)
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(buttonLayoutGroup.GetComponent<RectTransform>());
+            walletUpgradeButton.SetActive(false);
         }
     }
-
+    
+    IEnumerator PlaySoundWithDelay(AudioClip clip, int times, float delay) 
+    {
+        if (sfxSource == null || clip == null || times <= 0)
+        yield break;
+        
+     for (int i = 0; i < times; i++)
+        {
+            sfxSource.PlayOneShot(clip);
+            yield return new WaitForSeconds(delay);
+        }
+        
+    }
 }
