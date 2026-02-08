@@ -1,4 +1,4 @@
-# GDDV402-Assignment2
+# GDDV402-Assignment1
 Assignment #1: In-App Purchasing
 Worth 15%
 
