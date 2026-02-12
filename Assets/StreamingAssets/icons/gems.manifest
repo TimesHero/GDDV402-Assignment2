@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.3.3f1
+CRC: 1285644123
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 47174d03abd6d72fd849bed25926050b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bc9f87c7e64ff656997db0f2b2a91703
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 291771a7a95631e4c2efe9df114803f4
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Sprites/Week5Sprites/256/GemRed.png
+- Assets/Sprites/Week5Sprites/256/GemGreen.png
+- Assets/Sprites/Week5Sprites/256/GemYellow.png
+- Assets/Sprites/Week5Sprites/256/GemBlue.png
+Dependencies: []

@@ -1,0 +1,30 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.3.3f1
+CRC: 4254775370
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 94204ebc9bb13e245439b771bf369cea
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bc9f87c7e64ff656997db0f2b2a91703
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: f19384aa84f4ec43fe85d8c1050e7ada
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Sprites/Week5Sprites/256/PotionGreen.png
+- Assets/Sprites/Week5Sprites/256/ShieldSmallT2.png
+- Assets/Sprites/Week5Sprites/256/ShieldLargeT1.png
+- Assets/Sprites/Week5Sprites/256/PotionRed.png
+- Assets/Sprites/Week5Sprites/256/ShieldSmallT1.png
+- Assets/Sprites/Week5Sprites/256/ShieldLargeT2.png
+- Assets/Sprites/Week5Sprites/256/PotionBlue.png
+- Assets/Sprites/Week5Sprites/256/PotionYellow.png
+Dependencies: []
