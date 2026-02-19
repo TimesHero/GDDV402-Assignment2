@@ -24,4 +24,20 @@ public class CurrencyManager : MonoBehaviour
         walletCapacity = upgradedWalletCapacity;
         maxWalletCapacity = upgradedWalletCapacity;
     }
+
+    public bool SpendCurrency(int amount)
+    {
+        if (amount <= 0)
+        {
+            return false;
+        }
+
+        if (currentCurrency < amount)
+        {
+            return false;
+        }
+
+        currentCurrency -= amount;
+        return true;
+    }
 }
