@@ -25,7 +25,7 @@ public class CurrencyManager : MonoBehaviour
         maxWalletCapacity = upgradedWalletCapacity;
     }
 
-    public bool SpendCurrency(int amount)
+    public bool TrySpendCurrency(int amount)
     {
         if (amount <= 0)
         {
