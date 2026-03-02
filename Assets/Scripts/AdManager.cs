@@ -1,9 +1,14 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
 public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
+
+    [SerializeField] private CurrencyManager currencyManager;
+    [SerializeField] private string rewardedPlacementPrefix;
+
 
     public Button showAdButton;
     private string adUnitAffix;
@@ -60,6 +65,15 @@ public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowList
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        Debug.Log($"{placementId} Completed.");
+        if (showCompletionState != UnityAdsShowCompletionState.COMPLETED)
+            return;
+
+         string rewardedPlacementId = rewardedPlacementPrefix + adUnitAffix;
+
+        if (placementId == rewardedPlacementId)
+        {
+            if (currencyManager != null)
+                currencyManager.AddCurrency(10);
+        }
     }
 }
