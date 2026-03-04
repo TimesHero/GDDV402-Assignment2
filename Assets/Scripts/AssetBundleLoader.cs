@@ -15,14 +15,20 @@ public class AssetBundleLoader : MonoBehaviour
     public Image[] icons;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
+    {  
+        StartCoroutine(LoadBundleFromURL());
+    }
+
+    public void LoadIconsFromBundle(string newBundleName)
     {
+        bundleName = newBundleName;
         StartCoroutine(LoadBundleFromURL());
     }
 
     private IEnumerator LoadBundleFromURL()
     {
         string extension = string.IsNullOrEmpty(variantName) ? string.Empty : '.' + variantName;
-        string url = Path.Combine(Application.streamingAssetsPath, bundleName, extension);
+        string url = Path.Combine(Application.streamingAssetsPath, bundleName + extension);
 
         using UnityWebRequest webRequest = UnityWebRequestAssetBundle.GetAssetBundle(url);
 

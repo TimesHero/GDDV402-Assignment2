@@ -50,11 +50,12 @@ public class SaveManager : MonoBehaviour
         currencyManager.walletUpgraded = data.walletUpgraded;
     }
 
-    private void ApplyDefaults()
+    public void ApplyDefaults()
     {
         currencyManager.currentCurrency = 0;
         currencyManager.walletCapacity = 99;
         currencyManager.walletUpgraded = false;
+        Load();
     }
 
 

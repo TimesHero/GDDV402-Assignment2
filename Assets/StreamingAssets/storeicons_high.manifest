@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.3.7f1
-CRC: 263927966
+CRC: 2600246545
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6d50a14f2c3a88d4c603d0f1d469bcc1
+    Hash: 850ec7506142184f8ede69f9a28c4b4c
   TypeTreeHash:
     serializedVersion: 2
     Hash: bc9f87c7e64ff656997db0f2b2a91703
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: b1542ceb6c7c6399f93daffde879cf26
+    Hash: 625ed1472a03ceceebaabaec000ebfa7
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -19,8 +19,7 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Sprites/Week5Sprites/256/GemRed.png
-- Assets/Sprites/Week5Sprites/256/GemGreen.png
-- Assets/Sprites/Week5Sprites/256/GemYellow.png
-- Assets/Sprites/Week5Sprites/256/GemBlue.png
+- Assets/Sprites/storeicons_high/rupee_green_high.png
+- Assets/Sprites/storeicons_high/rupee_yellow_high.png
+- Assets/Sprites/storeicons_high/wallet_high.png
 Dependencies: []

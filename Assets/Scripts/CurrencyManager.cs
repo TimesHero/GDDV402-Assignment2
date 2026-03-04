@@ -8,6 +8,8 @@ public class CurrencyManager : MonoBehaviour
     private int maxWalletCapacity = 99;
     private int upgradedWalletCapacity = 999;
 
+    private int totalRupeesSpentSinceLastAd = 0;
+
     public void AddCurrency(int amount)
     {
         currentCurrency += amount;
@@ -38,6 +40,18 @@ public class CurrencyManager : MonoBehaviour
         }
 
         currentCurrency -= amount;
+
+        totalRupeesSpentSinceLastAd += amount;
         return true;
+    }
+
+    public bool HasReachedInterstitialThreshold(int threshold)
+    {
+        return totalRupeesSpentSinceLastAd >= threshold;
+    }
+
+    public void ResetInterstitialCounter()
+    {
+        totalRupeesSpentSinceLastAd = 0;
     }
 }
