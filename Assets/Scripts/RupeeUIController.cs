@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RupeeUIController : MonoBehaviour
 {
     [SerializeField] private CurrencyManager currencyManager;
     [SerializeField] private GameObject watchAdButtonRoot;
+    [SerializeField] private SaveManager saveManager;
+    [SerializeField] private Button watchAdButton;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +21,18 @@ public class RupeeUIController : MonoBehaviour
             return;
         }
 
-        currencyManager.TrySpendCurrency(5);
+        bool spentSuccessfully = currencyManager.TrySpendCurrency(5);
+
+        if (spentSuccessfully)
+        {
+            Debug.Log("Tip jar spent 5 rupees.");
+            saveManager?.Save();
+        }
+        else
+        {
+            Debug.Log("Tip jar failed. Not enough rupees.");
+        }
+
         RefreshWatchAdVisibility();
     }
 
@@ -29,7 +43,14 @@ public class RupeeUIController : MonoBehaviour
             return;
         }
 
-        watchAdButtonRoot.SetActive(currencyManager.currentCurrency == 0);
+        bool shouldShowAdButton = currencyManager.currentCurrency < 5;
+
+        watchAdButtonRoot.SetActive(shouldShowAdButton);
+
+        if (shouldShowAdButton && watchAdButton != null)
+        {
+            watchAdButton.interactable = true;
+        }
     }
 
 

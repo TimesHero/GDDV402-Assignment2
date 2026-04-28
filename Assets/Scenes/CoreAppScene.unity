@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 113656484}
   - component: {fileID: 113656483}
   m_Layer: 5
-  m_Name: ClearSaveFileButton
+  m_Name: TipJar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,9 +531,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1853909733}
-        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
-        m_MethodName: ApplyDefaults
+      - m_Target: {fileID: 584541455}
+        m_TargetAssemblyTypeName: RupeeUIController, Assembly-CSharp
+        m_MethodName: spendRupeesWhenClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1317,6 +1317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584541454}
   - component: {fileID: 584541453}
+  - component: {fileID: 584541455}
   m_Layer: 0
   m_Name: CurrencyManager
   m_TagString: Untagged
@@ -1354,6 +1355,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1883083833}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &584541455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584541452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d84ffc788c189b4c880f0f3f433ba66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RupeeUIController
+  currencyManager: {fileID: 584541453}
+  watchAdButtonRoot: {fileID: 2146598929}
+  saveManager: {fileID: 1853909733}
+  watchAdButton: {fileID: 2146598931}
 --- !u!1 &633169141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,6 +2353,7 @@ MonoBehaviour:
   interstitialPlacementPrefix: InterstitialRupees
   interstitialThreshold: 50
   bannerPlacementPrefix: 
+  saveManager: {fileID: 0}
   showAdButton: {fileID: 2146598931}
 --- !u!4 &1367287343
 Transform:
@@ -3715,7 +3733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   currencyManager: {fileID: 584541453}
-  purchaseFulfillment: {fileID: 0}
+  purchaseFulfillment: {fileID: 47275389}
 --- !u!4 &1853909734
 Transform:
   m_ObjectHideFlags: 0
@@ -4764,8 +4782,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1367287342}
         m_TargetAssemblyTypeName: AdManager, Assembly-CSharp
-        m_MethodName: OnUnityAdsShowClick
-        m_Mode: 5
+        m_MethodName: ShowRewardedRupeesAd
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -34,14 +34,18 @@ public class CurrencyManager : MonoBehaviour
             return false;
         }
 
-        if (currentCurrency < amount)
+        if (currentCurrency <= 0)
         {
             return false;
         }
 
-        currentCurrency -= amount;
+        int amountToSpend = Mathf.Min(amount, currentCurrency);
 
-        totalRupeesSpentSinceLastAd += amount;
+        currentCurrency -= amountToSpend;
+        totalRupeesSpentSinceLastAd += amountToSpend;
+
+        Debug.Log($"Tip jar spent {amountToSpend} rupees.");
+
         return true;
     }
 

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
+using System.Collections;
 
 public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -13,6 +14,7 @@ public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowList
     [SerializeField] private string interstitialPlacementPrefix;
     [SerializeField] private int interstitialThreshold = 50;
     [SerializeField] private string bannerPlacementPrefix;
+    [SerializeField] private SaveManager saveManager;
 
 
     public Button showAdButton;
@@ -35,11 +37,8 @@ public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowList
 
     private void Start()
     {
-        LoadAd(rewardedPlacementPrefix);
-        LoadAd(interstitialPlacementPrefix);
-
-        LoadBanner();
-        ShowBanner();
+        showAdButton.interactable = false;
+        StartCoroutine(WaitForAdsThenLoad());
     }
 
     private void Update()
@@ -57,6 +56,20 @@ public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowList
         }
     }
 
+    private IEnumerator WaitForAdsThenLoad()
+    {
+        while (!Advertisement.isInitialized)
+        {
+            yield return null;
+        }
+
+        LoadAd(rewardedPlacementPrefix);
+        LoadAd(interstitialPlacementPrefix);
+
+        LoadBanner();
+        ShowBanner();
+    }
+
     public void LoadAd(string adUnitPrefix)
     {
         string adUnitID = adUnitPrefix + adUnitAffix;
@@ -66,7 +79,38 @@ public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowList
     public void OnUnityAdsAdLoaded(string placementId)
     {
         Debug.Log($"{placementId} loaded successfully");
-        showAdButton.interactable = true;
+
+        string rewardedPlacementId = rewardedPlacementPrefix + adUnitAffix;
+
+        if (placementId == rewardedPlacementId)
+        {
+            showAdButton.interactable = true;
+        }
+    }
+
+    public void ShowRewardedRupeesAd()
+    {
+        Debug.Log("Watch ad button clicked.");
+
+    #if UNITY_EDITOR
+        Debug.Log("Editor test mode: simulating completed rewarded ad.");
+        RewardRupeesFromAd();
+    #else
+        ShowAd(rewardedPlacementPrefix);
+    #endif
+    }
+    private void RewardRupeesFromAd()
+    {
+        if (currencyManager == null)
+        {
+            Debug.LogWarning("CurrencyManager reference is missing. Cannot reward rupees.");
+            return;
+        }
+
+        currencyManager.AddCurrency(10);
+        Debug.Log("Reward granted: added 10 rupees.");
+
+        LoadAd(rewardedPlacementPrefix);
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
@@ -110,16 +154,7 @@ public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowList
 
         if (placementId == rewardedPlacementId)
         {
-            if (currencyManager != null)
-            {
-                Debug.Log("Rewarded ad completed successfully. Adding 10 rupees to the wallet.");
-                currencyManager.AddCurrency(10);
-                LoadAd(rewardedPlacementPrefix);
-            }
-            else
-            {
-                Debug.LogWarning("CurrencyManager reference is missing. Cannot reward rupees.");
-            }
+            RewardRupeesFromAd();
         }
     }
 

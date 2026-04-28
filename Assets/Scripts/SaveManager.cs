@@ -52,13 +52,28 @@ public class SaveManager : MonoBehaviour
 
     public void ApplyDefaults()
     {
+        if (currencyManager == null)
+        {
+            return;
+        }
+
         currencyManager.currentCurrency = 0;
         currencyManager.walletCapacity = 99;
         currencyManager.walletUpgraded = false;
-        Load();
+
+        Save();
     }
 
+    public void ClearSaveFile()
+    {
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+        }
 
+        ApplyDefaults();
 
+        Debug.Log("Save file cleared and defaults applied.");
+    }
 
 }
